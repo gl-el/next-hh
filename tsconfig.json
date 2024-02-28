@@ -18,36 +18,16 @@
         "jsxImportSource": "@emotion/core",
         "baseUrl": ".",
         "paths": {
-            "@components/*": [
-                "src/components/*"
-            ],
-            "@containers/*": [
-                "src/containers/*"
-            ],
-            "@scripts/*": [
-                "src/scripts/*"
-            ],
-            "@hooks/*": [
-                "src/scripts/hooks/*"
-            ],
-            "@icons/*": [
-                "src/icons/*"
-            ],
-            "@views/*": [
-                "src/views/*"
-            ],
-            "@controls/*": [
-                "src/components/controls/*"
-            ],
-            "@customTypes/*": [
-                "src/types/*"
-            ],
-            "@context/*": [
-                "src/context/*"
-            ],
-            "@api/*": [
-                "src/api/*"
-            ]
+            "@components/*": ["src/components/*"],
+            "@containers/*": ["src/containers/*"],
+            "@scripts/*": ["src/scripts/*"],
+            "@hooks/*": ["src/scripts/hooks/*"],
+            "@icons/*": ["src/icons/*"],
+            "@views/*": ["src/views/*"],
+            "@controls/*": ["src/components/controls/*"],
+            "@customTypes/*": ["src/types/*"],
+            "@context/*": ["src/context/*"],
+            "@api/*": ["src/api/*"]
         },
         "incremental": true
     },
