@@ -1,4 +1,5 @@
 import { ComponentsTheme, scale } from '@greensight/gds';
+import { rgba } from 'emotion-rgba';
 
 import tokens from '../../../public/tokens.json';
 
@@ -16,6 +17,10 @@ export const Button: ComponentsTheme['Button'] = {
             height: scale(5),
             padding: scale(4),
             typography: 'xs',
+        },
+        link: {
+            padding: 0,
+            iconOffset: 4,
         },
     },
     themes: {
@@ -39,6 +44,26 @@ export const Button: ComponentsTheme['Button'] = {
             },
             hover: {
                 bg: colors.black,
+            },
+            disabled: {
+                bg: colors.grey200,
+                color: colors.grey800,
+            },
+        },
+        link: {
+            default: {
+                bg: 'transparent',
+                color: colors.blue,
+                css: {
+                    padding: 0,
+                    borderRadius: 0,
+                    borderBottom: '1px solid transparent',
+                },
+            },
+            hover: {
+                css: {
+                    borderBottom: `1px solid ${rgba(colors.blue, 0.2)}`,
+                },
             },
             disabled: {
                 bg: colors.grey200,
