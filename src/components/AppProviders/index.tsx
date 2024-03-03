@@ -1,7 +1,6 @@
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { ReactNode } from 'react';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { VacanciesControlProvider } from '@context/vacanciesControls';
 
@@ -31,7 +30,7 @@ function AppProviders({ children, dehydratedState }: AppProvidersProps) {
                 <Hydrate state={dehydratedState}>
                     <VacanciesControlProvider>
                         {children}
-                        <ReactQueryDevtools initialIsOpen={false}></ReactQueryDevtools>
+                        <ReactQueryDevtools initialIsOpen={false} />
                     </VacanciesControlProvider>
                 </Hydrate>
             </QueryClientProvider>

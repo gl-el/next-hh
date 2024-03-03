@@ -25,20 +25,22 @@ export default function VacanciesFilters({ employments, positions }: VacanciesFi
 
     return (
         <div>
-            <Layout type={'flex'} align={'end'}>
-                <Layout.Item css={{ width: '240px' }} >
+            <Layout type="flex" align="end">
+                <Layout.Item css={{ width: '240px' }}>
                     Form
                     <Select
+                        instanceId={'employments'}
                         options={employments}
                         defaultValue={
                             employmentID ? employments.find(item => item.value === employmentID) : employmentValue
                         }
-                        onChange={e => setEmploymentValue(e.value)}
+                        onChange={e => setEmploymentValue(typeof e === 'string' ? e : e.value)}
                     />
                 </Layout.Item>
                 <Layout.Item css={{ width: '240px' }}>
                     Position
                     <Select
+                        instanceId={'positions'}
                         options={positions}
                         defaultValue={positionID ? positions.find(item => item.value === positionID) : positionValue}
                         onChange={e => setPositionValue(e.value)}
@@ -50,7 +52,11 @@ export default function VacanciesFilters({ employments, positions }: VacanciesFi
                     </Button>
                 </Layout.Item>
             </Layout>
-            {(employmentID || positionID) && <Button theme='link' size={'link'} Icon={CloseIcon} iconAfter onClick={handleClearFilters}>Clear filters</Button>}
+            {(employmentID || positionID) && (
+                <Button theme="link" size="link" Icon={CloseIcon} iconAfter onClick={handleClearFilters}>
+                    Clear filters
+                </Button>
+            )}
         </div>
     );
 }

@@ -1,12 +1,11 @@
-import { QueryClient, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
-import { VacanciesRequestProps } from '@api/common/types';
-import { getVacanciesDetailed } from '@api/index';
-import { VacanciesQueryResponse } from '@api/vacancies/types';
+import { VacanciesRequestProps, VacancyPreviewsApiProps } from '@api/common/types';
+import { getVacancies } from '@api/index';
 
 export function useVacancies(data: VacanciesRequestProps) {
-    return useQuery<VacanciesQueryResponse, Error>({
+    return useQuery<VacancyPreviewsApiProps, Error>({
         queryKey: ['vacancies', data],
-        queryFn: () => getVacanciesDetailed(data),
+        queryFn: () => getVacancies(data),
     });
 }

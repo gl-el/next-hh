@@ -21,8 +21,8 @@ export default function IndexPage({ employments, positions }: IndexPageProps) {
         <main css={{ maxWidth: '1200px', margin: '0 auto', padding: `${scale(8)}px 0px` }}>
             <h1 css={{ ...typography('h1'), marginBottom: scale(5) }}>List of vacancies</h1>
             <VacanciesFilters employments={employments} positions={positions} />
-            {!isLoading && data?.vacancies.map(vacancy => <VacancieCard key={vacancy.id} {...vacancy} />)}
-            <Pagination currentPage={page} onNext={onNextPage} onPrev={onPrevPage} totalPages={data?.pagesTotal ?? 0} />
+            {!isLoading && data?.items.map(item => <VacancieCard key={item.id} id={item.id} />)}
+            <Pagination currentPage={page} onNext={onNextPage} onPrev={onPrevPage} totalPages={data?.pages ?? 0} />
         </main>
     );
 }

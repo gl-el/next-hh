@@ -53,9 +53,7 @@ export async function getDictionaries() {
 export async function getVacanciesDetailed({ page = 1, employmentID, positionID }: VacanciesRequestProps) {
     const data = await getVacancies({ page, employmentID, positionID });
     const pagesTotal = data?.pages ?? 0;
-    const vacanciesID = data.items.map(item => {
-        return item.id;
-    });
+    const vacanciesID = data.items.map(item => item.id);
     const vacancies = await Promise.all(vacanciesID.map(id => getVacancy(id)));
     return { vacancies, pagesTotal };
 }

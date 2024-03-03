@@ -19,7 +19,7 @@ interface VacanciesControlProviderProps {
 
 export function VacanciesControlProvider({ children }: VacanciesControlProviderProps) {
     const router = useRouter();
-    const query = router.query;
+    const { query } = router;
     const queryEmployment = Array.isArray(query.employment) ? query.employment[0] : query.employment;
     const queryPosition = Array.isArray(query.position) ? query.position[0] : query.position;
     const [page, setPage] = useState(Number(query.page) || 1);
@@ -28,7 +28,7 @@ export function VacanciesControlProvider({ children }: VacanciesControlProviderP
 
     function onNextPage() {
         router.push(
-            `?page=${page + 1}${employmentID ? '&employment=' + employmentID : ''}${positionID ? '&position=' + positionID : ''}`,
+            `?page=${page + 1}${employmentID ? `&employment=${employmentID}` : ''}${positionID ? `&position=${positionID}` : ''}`,
             undefined,
             { shallow: true }
         );
@@ -37,7 +37,7 @@ export function VacanciesControlProvider({ children }: VacanciesControlProviderP
 
     function onPrevPage() {
         router.push(
-            `?page=${page - 1}${employmentID ? '&employment=' + employmentID : ''}${positionID ? '&position=' + positionID : ''}`,
+            `?page=${page - 1}${employmentID ? `&employment=${employmentID}` : ''}${positionID ? `&position=${positionID}` : ''}`,
             undefined,
             { shallow: true }
         );
@@ -49,7 +49,7 @@ export function VacanciesControlProvider({ children }: VacanciesControlProviderP
         setPositionID(positionValue);
         setPage(1);
         router.push(
-            `?page=1${employmentValue ? '&employment=' + employmentValue : ''}${positionValue ? '&position=' + positionValue : ''}`,
+            `?page=1${employmentValue ? `&employment=${employmentValue}` : ''}${positionValue ? `&position=${positionValue}` : ''}`,
             undefined,
             {
                 shallow: true,
