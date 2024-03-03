@@ -6,6 +6,7 @@ import {
     VacancyPreviewsApiProps,
     VacancyProps,
 } from '@api/common/types';
+
 import { API_BASE, PAGE_SIZE } from '@scripts/consts';
 
 async function returnJSON<T extends object>(response: Response) {
@@ -47,4 +48,14 @@ export async function getPositions() {
 export async function getDictionaries() {
     const response = await fetch(`${API_BASE}/dictionaries?locale=EN`);
     return returnJSON<DictionariesApiProps>(response);
+}
+
+export async function getVacanciesDetailed({ page = 1, employmentID, positionID }: VacanciesRequestProps) {
+    const data = await getVacancies({ page, employmentID, positionID });
+    const pagesTotal = data?.pages ?? 0;
+    const vacanciesID = data.items.map(item => {
+        return item.id;
+    });
+    const vacancies = await Promise.all(vacanciesID.map(id => getVacancy(id)));
+    return { vacancies, pagesTotal };
 }

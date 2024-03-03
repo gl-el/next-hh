@@ -8,5 +8,5 @@ export interface VacanciesFiltersProps {
     positions: {
         value: string;
         label: string;
-    }[]
+    }[];
 }

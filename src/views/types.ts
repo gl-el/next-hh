@@ -6,5 +6,5 @@ export interface IndexPageProps {
     positions: {
         value: string;
         label: string;
-    }[]
+    }[];
 }
