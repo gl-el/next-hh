@@ -14,13 +14,14 @@ export const Button: ComponentsTheme['Button'] = {
     },
     sizes: {
         md: {
-            height: scale(5),
+            height: 44,
             padding: scale(4),
             typography: 'xs',
         },
         link: {
             padding: 0,
             iconOffset: 4,
+            typography: 'm',
         },
     },
     themes: {
@@ -66,7 +67,6 @@ export const Button: ComponentsTheme['Button'] = {
                 },
             },
             disabled: {
-                bg: colors.grey200,
                 color: colors.grey800,
             },
         },
