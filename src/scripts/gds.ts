@@ -8,6 +8,8 @@ import {
     useTheme as useGDSTheme,
 } from '@greensight/gds';
 
+import { Select, SelectTheme } from '@scripts/themes/select';
+
 import tokens from '../../public/tokens.json';
 import { Button } from './themes/button';
 import { global } from './themes/global';
@@ -18,15 +20,21 @@ export type TypographyParam = keyof typeof tokens.typography.styles;
 
 export const MEDIA_QUERIES = createMediaQueries(tokens.layout.breakpoints);
 
+interface ComponentsThemeExtended extends ComponentsTheme {
+    Select?: SelectTheme;
+}
+
 export interface ExtendedTheme extends Omit<Theme, 'colors'> {
-    components?: ComponentsTheme;
+    components?: ComponentsThemeExtended;
     colors?: ColorsTheme;
+    Select?: SelectTheme;
 }
 
 const settings: ExtendedTheme = {
     global,
     components: {
         Button,
+        Select,
     },
 };
 

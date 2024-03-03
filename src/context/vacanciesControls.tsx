@@ -25,14 +25,14 @@ export function VacanciesControlProvider({ children }: VacanciesControlProviderP
     const [page, setPage] = useState(Number(query.page) || 1);
     const [employmentID, setEmploymentID] = useState(queryEmployment ?? '');
     const [positionID, setPositionID] = useState(queryPosition ?? '');
-
+    console.log('context query',query);
     function onNextPage() {
         router.push(
             `?page=${page + 1}${employmentID ? `&employment=${employmentID}` : ''}${positionID ? `&position=${positionID}` : ''}`,
             undefined,
             { shallow: true }
         );
-        setPage(page + 1);
+        /*setPage(page + 1);*/
     }
 
     function onPrevPage() {
@@ -41,7 +41,7 @@ export function VacanciesControlProvider({ children }: VacanciesControlProviderP
             undefined,
             { shallow: true }
         );
-        setPage(page - 1);
+        /*setPage(page - 1);*/
     }
 
     function onApplyFilter({ employmentValue = '', positionValue = '' }) {

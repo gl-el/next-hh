@@ -1,10 +1,10 @@
 import { Button, Layout } from '@greensight/gds';
 import { useState } from 'react';
-import Select from 'react-select';
 
 import { useVacanciesControl } from '@context/vacanciesControls';
 
 import { VacanciesFiltersProps } from '@components/VacanciesFilters/types';
+import Select from '@components/controls/Select';
 
 import CloseIcon from '@icons/close.svg';
 
