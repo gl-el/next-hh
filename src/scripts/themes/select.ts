@@ -1,16 +1,18 @@
-import { StylesConfig } from 'react-select';
-import { typography } from '@scripts/gds';
-import tokens from '../../../public/tokens.json';
 import { scale } from '@greensight/gds';
+import { StylesConfig } from 'react-select';
 
-const {colors, shadows} = tokens;
+import { typography } from '@scripts/gds';
+
+import tokens from '../../../public/tokens.json';
+
+const { colors, shadows } = tokens;
 
 export const Select: StylesConfig = {
     control: (provided, state) => ({
         ...provided,
         padding: `${scale(1, true)}px ${scale(3, true)}px`,
         minHeight: '44px',
-        borderColor: state.isFocused ? `${colors.blue}`: `${colors.grey400}`,
+        borderColor: state.isFocused ? `${colors.blue}` : `${colors.grey400}`,
         boxShadow: 'none',
         '&:hover': {
             borderColor: `${colors.blue}`,

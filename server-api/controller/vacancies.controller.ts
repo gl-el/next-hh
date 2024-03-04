@@ -33,11 +33,11 @@ class VacanciesController {
             }
         }
     };
-    getSchedules = async (req: Request, res: Response) => {
+    getEmployments = async (req: Request, res: Response) => {
         try {
             const data = await VacanciesService.getDictionaries();
-            const schedules = data.schedule;
-            res.status(200).json(schedules);
+            const employment = data.employment;
+            res.status(200).json(employment);
         } catch (e) {
             console.warn(e, '\n\n-----------------------------------------------------');
             if (e instanceof Error) {

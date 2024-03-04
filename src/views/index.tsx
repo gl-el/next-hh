@@ -1,8 +1,7 @@
 import { scale } from '@greensight/gds';
+import { useRouter } from 'next/router';
 
 import { useVacancies } from '@api/vacancies/useVacancies';
-
-import { useVacanciesControl } from '@context/vacanciesControls';
 
 import { IndexPageProps } from '@views/types';
 
@@ -14,15 +13,16 @@ import VacanciesFilters from '@components/VacanciesFilters';
 import { typography } from '@scripts/gds';
 
 export default function IndexPage({ employments, positions }: IndexPageProps) {
-    const { onNextPage, onPrevPage, page, employmentID, positionID } = useVacanciesControl();
-    const { data, isLoading } = useVacancies({ page, employmentID, positionID });
+    const router = useRouter();
+    const { page, employment, position } = router.query;
+    const { data, isLoading } = useVacancies({ page: page ?? 1, employmentID: employment ?? '', positionID: position ?? '' });
 
     return (
         <main css={{ maxWidth: '1200px', margin: '0 auto', padding: `${scale(8)}px 0px` }}>
             <h1 css={{ ...typography('h1'), marginBottom: scale(5) }}>List of vacancies</h1>
-            <VacanciesFilters employments={employments} positions={positions} />
-            {!isLoading && data?.items.map(item => <VacancieCard key={item.id} id={item.id} />)}
-            <Pagination currentPage={page} onNext={onNextPage} onPrev={onPrevPage} totalPages={data?.pages ?? 0} />
+            <VacanciesFilters schedules={employments} positions={positions} />
+            {!isLoading && data?.vacancies.map(item => <VacancieCard key={item.id} {...item} />)}
+            <Pagination totalPages={data?.pagesTotal ?? 0} />
         </main>
     );
 }

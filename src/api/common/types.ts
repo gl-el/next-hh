@@ -12,10 +12,15 @@ export interface VacanciesRequestProps {
 }
 
 export interface DictionariesApiProps extends Record<string, { id: string; name: string }[]> {
-    schedule: {
+    employment: {
         id: string;
         name: string;
     }[];
+}
+
+export interface EmploymentsApiProps {
+    id: string,
+    name: string;
 }
 
 export interface ProfessionsApiProps {

@@ -1,10 +1,10 @@
 export interface IndexPageProps {
     employments: {
-        value: string;
-        label: string;
+        id: string;
+        name: string;
     }[];
     positions: {
-        value: string;
-        label: string;
+        id: string;
+        name: string;
     }[];
 }

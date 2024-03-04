@@ -1,12 +1,12 @@
 import { Options } from 'react-select';
 
 export interface VacanciesFiltersProps {
-    employments: {
-        value: string;
-        label: string;
+    schedules: {
+        name: string;
+        id: string;
     }[];
     positions: {
-        value: string;
-        label: string;
+        name: string;
+        id: string;
     }[];
 }

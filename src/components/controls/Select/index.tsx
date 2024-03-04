@@ -1,9 +1,11 @@
 import ReactSelect, {
+    ActionMeta,
     type DropdownIndicatorProps,
     GroupBase,
+    MultiValue,
     Props as SelectProps,
+    SingleValue,
     components,
-    ActionMeta, SingleValue, MultiValue
 } from 'react-select';
 
 import { useTheme } from '@scripts/gds';
@@ -48,4 +50,4 @@ const Select: React.FC<CustomSelectProps> = ({ options, value, onChange, placeho
     );
 };
 
-export default Select
+export default Select;

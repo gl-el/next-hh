@@ -1,62 +1,48 @@
 import { Button, Layout } from '@greensight/gds';
 import { useState } from 'react';
 
-import { useVacanciesControl } from '@context/vacanciesControls';
-
 import { VacanciesFiltersProps } from '@components/VacanciesFilters/types';
-import Select from '@components/controls/Select';
 
 import CloseIcon from '@icons/close.svg';
+import { useRouter } from 'next/router';
 
-export default function VacanciesFilters({ employments, positions }: VacanciesFiltersProps) {
-    const { onApplyFilter, onClearFilter, employmentID, positionID } = useVacanciesControl();
-    const [employmentValue, setEmploymentValue] = useState(employmentID);
-    const [positionValue, setPositionValue] = useState(positionID);
+export default function VacanciesFilters({ schedules, positions }: VacanciesFiltersProps) {
+    const [employmentValue, setEmploymentValue] = useState('');
+    const [positionValue, setPositionValue] = useState('');
 
-    const handleFilters = () => {
-        onApplyFilter({ employmentValue, positionValue });
-    };
+    const { push, query, pathname } = useRouter();
 
-    const handleClearFilters = () => {
-        setEmploymentValue('');
-        setPositionValue('');
-        onClearFilter();
-    };
-
+    const updateQuery = () => {
+        push(
+            {
+                pathname,
+                query: { page: 1, employment: employmentValue, position: positionValue },
+            },
+            undefined,
+            { shallow: true }
+        )
+    }
     return (
         <div>
             <Layout type="flex" align="end">
-                <Layout.Item css={{ width: '240px' }}>
-                    Form
-                    <Select
-                        instanceId={'employments'}
-                        options={employments}
-                        defaultValue={
-                            employmentID ? employments.find(item => item.value === employmentID) : employmentValue
-                        }
-                        onChange={e => setEmploymentValue(typeof e === 'string' ? e : e.value)}
-                    />
-                </Layout.Item>
-                <Layout.Item css={{ width: '240px' }}>
-                    Position
-                    <Select
-                        instanceId={'positions'}
-                        options={positions}
-                        defaultValue={positionID ? positions.find(item => item.value === positionID) : positionValue}
-                        onChange={e => setPositionValue(e.value)}
-                    />
-                </Layout.Item>
-                <Layout.Item>
-                    <Button onClick={handleFilters} disabled={!employmentValue && !positionValue}>
-                        Apply filters
-                    </Button>
-                </Layout.Item>
+                Form
+                <select value={employmentValue} onChange={(e) => setEmploymentValue(e.target.value)}>
+                    {schedules.map((item, index) => (
+                        <option key={`employment=${index}`} value={item.id}>
+                            {item.name}
+                        </option>
+                    ))}
+                </select>
+                Position
+                <select value={positionValue} onChange={(e) => setPositionValue(e.target.value)}>
+                    {positions.map((item, index) => (
+                        <option key={`position=${index}`} value={item.id}>
+                            {item.name}
+                        </option>
+                    ))}
+                </select>
+                <Button onClick={updateQuery}>Apply filters</Button>
             </Layout>
-            {(employmentID || positionID) && (
-                <Button theme="link" size="link" Icon={CloseIcon} iconAfter onClick={handleClearFilters}>
-                    Clear filters
-                </Button>
-            )}
         </div>
     );
 }

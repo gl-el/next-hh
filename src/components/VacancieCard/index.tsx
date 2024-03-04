@@ -1,27 +1,18 @@
 import { Layout, scale } from '@greensight/gds';
 import Image from 'next/image';
 
-import { useVacancy } from '@api/vacancy/useVacancy';
-
-import { VacancyCardProps } from '@components/VacancieCard/types';
-
 import { Button, typography } from '@scripts/gds';
+import { VacancyProps } from '@customTypes/index';
 
-export default function VacancieCard(vacancyProps: VacancyCardProps) {
-    const { data, isLoading, isError } = useVacancy(vacancyProps);
-    const logo = data?.employer?.logo_urls?.original;
-    const employerName = data?.employer?.name;
-    if (isLoading) {
-        return <p>Loading..</p>;
-    }
-    if (isError) {
-        return <p>Error occured during getting vacancy data</p>;
-    }
+export default function VacancieCard(vacancyProps: VacancyProps) {
+    const logo = vacancyProps?.employer?.logo_urls?.original;
+    const employerName = vacancyProps?.employer?.name;
+    console.log(vacancyProps);
     return (
         <div css={{ padding: `${scale(5)}px ${scale(5)}px ${scale(6)}px` }}>
             <Layout type="flex" justify="space-between" align="center" direction="row" wrap={false} marginWidth={0}>
                 <Layout type="flex" align="center">
-                    <h4 css={typography('h4')}>{data.name}</h4>
+                    <h4 css={typography('h4')}>{vacancyProps.name}</h4>
 
                     {logo && (
                         <Image
@@ -34,11 +25,11 @@ export default function VacancieCard(vacancyProps: VacancyCardProps) {
                     )}
                 </Layout>
 
-                <Button as="a" theme="secondary" target="_blank" href={data.alternate_url} rel="noopener noreferrer">
+                <Button as="a" theme="secondary" target="_blank" href={vacancyProps.alternate_url} rel="noopener noreferrer">
                     Respond
                 </Button>
             </Layout>
-            <div css={typography('m')} dangerouslySetInnerHTML={{ __html: data.description }} />
+            <div css={typography('m')} dangerouslySetInnerHTML={{ __html: vacancyProps.description }} />
             <br />
         </div>
     );
