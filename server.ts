@@ -13,7 +13,7 @@ const handle = nextApp.getRequestHandler();
 
 nextApp.prepare().then(() => {
     const app = express();
-    app.use('', configuredRouter);
+    app.use('/api', configuredRouter);
 
     app.get('*', (req: Request, res: Response) => handle(req, res));
 

@@ -1,4 +1,4 @@
-import { RequestHandler, Response } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 
 import VacanciesService from '../services/vacancies.service';
 
@@ -30,6 +30,37 @@ class VacanciesController {
                 res.status(500).send(e.message);
             } else {
                 res.status(500).send('Unexpected error getting vacancies');
+            }
+        }
+    };
+    getSchedules = async (req: Request, res: Response) => {
+        try {
+            const data = await VacanciesService.getDictionaries();
+            const schedules = data.schedule;
+            res.status(200).json(schedules);
+        } catch (e) {
+            console.warn(e, '\n\n-----------------------------------------------------');
+            if (e instanceof Error) {
+                res.status(500).send(e.message);
+            } else {
+                res.status(500).send('Unexpected error getting schedules');
+            }
+        }
+    };
+
+    getPositions = async (req: Request, res: Response) => {
+        try {
+            const data = await VacanciesService.getProfessionalRoles();
+            const positions = data.categories
+                .map(category => category.roles.map(role => ({ id: role.id, name: role.name })))
+                .flat();
+            res.status(200).json(positions);
+        } catch (e) {
+            console.warn(e, '\n\n-----------------------------------------------------');
+            if (e instanceof Error) {
+                res.status(500).send(e.message);
+            } else {
+                res.status(500).send('Unexpected error getting positions');
             }
         }
     };

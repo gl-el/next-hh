@@ -1,4 +1,10 @@
-import { ErrorsApiProps, VacanciesRequestProps, VacancyPreviewsApiProps } from '@api/common/types';
+import {
+    DictionariesApiProps,
+    ErrorsApiProps,
+    ProfessionsApiProps,
+    VacanciesRequestProps,
+    VacancyPreviewsApiProps,
+} from '@api/common/types';
 
 import { VacancyProps } from '@customTypes/index';
 
@@ -43,9 +49,19 @@ class VacanciesService {
     async getVacancies({ page = 1, employmentID, positionID }: VacanciesRequestProps) {
         console.error(page, employmentID, positionID);
         const response = await fetch(
-            `${API_BASE}/vacancies?locale=EN&per_page=${PAGE_SIZE}&page=${page}${employmentID ? `&employment=${employmentID}` : ''}${positionID ? `&professional_role=${positionID}` : ''}`
+            `${API_BASE}/vacancies?locale=EN&per_page=${PAGE_SIZE}&page=${page ? page : 1}${employmentID ? `&employment=${employmentID}` : ''}${positionID ? `&professional_role=${positionID}` : ''}`
         );
         return this.returnJSON<VacancyPreviewsApiProps>(response);
+    }
+
+    async getDictionaries() {
+        const response = await fetch(`${API_BASE}/dictionaries?locale=EN`);
+        return this.returnJSON<DictionariesApiProps>(response);
+    }
+
+    async getProfessionalRoles() {
+        const response = await fetch(`${API_BASE}/professional_roles?locale=EN`);
+        return this.returnJSON<ProfessionsApiProps>(response);
     }
 }
 
