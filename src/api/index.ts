@@ -4,10 +4,11 @@ import {
     ProfessionsApiProps,
     VacanciesRequestProps,
     VacancyPreviewsApiProps,
-    VacancyProps,
+
 } from '@api/common/types';
 
 import { API_BASE, PAGE_SIZE } from '@scripts/consts';
+import { VacancyProps } from '@customTypes/index';
 
 async function returnJSON<T extends object>(response: Response) {
     if (!response.ok) {

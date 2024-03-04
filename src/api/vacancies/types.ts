@@ -1,4 +1,4 @@
-import { VacancyProps } from '@api/common/types';
+import { VacancyProps } from '@customTypes/index';
 
 export interface VacanciesQueryResponse {
     vacancies: VacancyProps[];

@@ -1,37 +1,42 @@
-import { Request, Response } from 'express';
+import { RequestHandler, Response } from 'express';
+
+
 
 import VacanciesService from '../services/vacancies.service';
 
+
+type ReqQuery = {
+    page?: string;
+    employment?: string;
+    position?: string;
+};
+
 class VacanciesController {
     // eslint-disable-next-line class-methods-use-this
-    async getDetailedVacancies(req: Request, res: Response) {
+
+    getDetailedVacancies: RequestHandler<unknown, unknown, unknown, ReqQuery> = async (req, res: Response) => {
         const { query } = req;
-        const { page, employmentID, positionID } = query;
-
-        const data = await VacanciesService.getVacancies({ page, employmentID, positionID });
-
-        let vacancies;
-        let pagesTotal;
-
+        const { page, employment: employmentID, position: positionID } = query;
         try {
-            // @ts-ignore
-            pagesTotal = data?.pages ?? 0;
-            // @ts-ignore
-            const vacanciesID = data.items?.map(item => item.id);
+            const data = await VacanciesService.getVacancies({ page: Number(page), employmentID, positionID });
 
-            vacancies = await Promise.allSettled(
-                vacanciesID.map(
-                    // @ts-ignore
-                    id => VacanciesService.getVacancies(id)
-                )
-            );
+            const pagesTotal = data?.pages ?? 0;
+
+            const vacanciesID = data.items.map(item => item.id);
+
+            const vacancies = await Promise.all(vacanciesID.map(id => VacanciesService.getVacancy(id)));
+
+            res.status(200).json({ vacancies, pagesTotal });
         } catch (e) {
-            console.warn(e, '\n\n\n\n\n\n\n')
-            res.status(500).send('An error getted');
+            console.warn(e, '\n\n-----------------------------------------------------');
+            if (e instanceof Error) {
+                res.status(500).send(e.message);
+            } else {
+                res.status(500).send('Unexpected error getting vacancies')
+            }
         }
 
-        res.json({ vacancies, pagesTotal });
-    }
+    };
 }
 
 export default new VacanciesController();

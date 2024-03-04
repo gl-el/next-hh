@@ -4,7 +4,13 @@
         "module": "commonjs",
         "target": "ES2020",
         "outDir": "dist",
-        "noEmit": false
+        "noEmit": false,
+        "paths": {
+            "@scripts/*": ["src/scripts/*"],
+            "@hooks/*": ["src/scripts/hooks/*"],
+            "@customTypes/*": ["src/types/*"],
+            "@api/*": ["src/api/*"]
+        }
     },
     "include": [
         "./index.ts",
