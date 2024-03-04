@@ -12,11 +12,6 @@
             "@api/*": ["src/api/*"]
         }
     },
-    "include": [
-        "./index.ts",
-        "server-api"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+    "include": ["./index.ts", "server-api"],
+    "exclude": ["node_modules"]
 }

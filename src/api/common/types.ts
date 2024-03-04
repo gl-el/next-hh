@@ -40,4 +40,3 @@ export interface VacancyPreviewsApiProps {
     page: number;
     per_page: number;
 }
-

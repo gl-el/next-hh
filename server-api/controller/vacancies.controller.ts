@@ -1,9 +1,6 @@
 import { RequestHandler, Response } from 'express';
 
-
-
 import VacanciesService from '../services/vacancies.service';
-
 
 type ReqQuery = {
     page?: string;
@@ -32,10 +29,9 @@ class VacanciesController {
             if (e instanceof Error) {
                 res.status(500).send(e.message);
             } else {
-                res.status(500).send('Unexpected error getting vacancies')
+                res.status(500).send('Unexpected error getting vacancies');
             }
         }
-
     };
 }
 
