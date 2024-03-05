@@ -14,7 +14,7 @@ export const Button: ComponentsTheme['Button'] = {
     },
     sizes: {
         md: {
-            height: 44,
+            height: scale(5),
             padding: scale(4),
             typography: 'xs',
         },

@@ -7,7 +7,7 @@ import { VacancyProps } from '@customTypes/index';
 export default function VacancieCard(vacancyProps: VacancyProps) {
     const logo = vacancyProps?.employer?.logo_urls?.original;
     const employerName = vacancyProps?.employer?.name;
-    console.log(vacancyProps);
+
     return (
         <div css={{ padding: `${scale(5)}px ${scale(5)}px ${scale(6)}px` }}>
             <Layout type="flex" justify="space-between" align="center" direction="row" wrap={false} marginWidth={0}>
