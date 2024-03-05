@@ -1,53 +1,66 @@
 import { scale } from '@greensight/gds';
 import * as SelectPrimitive from '@radix-ui/react-select';
+import { rotate } from 'next/dist/server/lib/squoosh/impl';
 import React, { ReactNode } from 'react';
+import { Simulate } from 'react-dom/test-utils';
 
-import { colors, shadows, typography } from '@scripts/gds';
+import { colors, shadows, typography, useTheme } from '@scripts/gds';
 
 import ChevronDownIcon from '@icons/chevronDown.svg';
-import { rotate } from 'next/dist/server/lib/squoosh/impl';
+
+import select = Simulate.select;
 
 interface SelectProps extends SelectPrimitive.SelectProps {
     children: ReactNode;
     placeholder?: string;
+    options: {
+        value: string | number;
+        name: string;
+    };
 }
 
 export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(({ children, ...props }, forwardedRef) => {
+    const { components } = useTheme();
+    const selectTheme = components?.Select;
     return (
         <SelectPrimitive.Root {...props}>
             <SelectPrimitive.Trigger
                 ref={forwardedRef}
                 css={{
-                    width: 'fit-content',
-                    minWidth: '250px',
-                    minHeight: scale(5),
-                    padding: `${scale(1, true)}px ${scale(3, true)}px`,
-                    border: `1px solid ${colors.grey400}`,
-                    borderRadius: scale(1, true),
+                    width: '100%',
+                    minHeight: selectTheme?.height,
+                    padding: selectTheme?.padding,
+                    border: '1px solid',
+                    borderColor: selectTheme?.borderColor,
+                    borderRadius: selectTheme?.borderRadius,
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     ...typography('s'),
-                    '&:active':{
-                        border: `1px solid ${colors.blue}`,
-                    }
+                    '&focus': {
+                        color: selectTheme?.focusBorderColor,
+                    },
+                    '&[data-placeholder]': {
+                        color: selectTheme?.placeholderColor,
+                    },
                 }}
             >
                 <SelectPrimitive.Value placeholder={props.placeholder ?? false} />
-                <SelectPrimitive.Icon asChild
+                <SelectPrimitive.Icon
+                    asChild
                     css={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        '&[data-state]="open"': {
-                            transform: 'rotate(180 deg)',
-                        }
                     }}
                 >
-                    <ChevronDownIcon css={{
-                        transform: "rotate(0deg)",
-                        "[data-state=open] > &": { transform: "rotate(180deg)" }
-                    }} />
+                    <ChevronDownIcon
+                        css={{
+                            transform: 'rotate(0deg)',
+                            transition: 'transform 0.2s',
+                            '[data-state=open] > &': { transform: 'rotate(180deg)' },
+                        }}
+                    />
                 </SelectPrimitive.Icon>
             </SelectPrimitive.Trigger>
 
@@ -57,9 +70,9 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(({ childr
                 sideOffset={4}
                 css={{
                     width: 'var(--radix-select-trigger-width)',
-                    boxShadow: `${shadows.box}`,
-                    backgroundColor: `${colors.white}`,
-                    borderRadius: `${scale(1, true)}px`,
+                    boxShadow: selectTheme?.menuShadow,
+                    backgroundColor: selectTheme?.menuColor,
+                    borderRadius: selectTheme?.menuBorderRadius,
                 }}
             >
                 <SelectPrimitive.Viewport>{children}</SelectPrimitive.Viewport>
