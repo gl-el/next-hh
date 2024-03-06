@@ -51,10 +51,14 @@ class VacanciesController {
     getPositions = async (req: Request, res: Response) => {
         try {
             const data = await VacanciesService.getProfessionalRoles();
-            const positions = data.categories
-                .map(category => category.roles.map(role => ({ id: role.id, name: role.name })))
-                .flat();
-            res.status(200).json(positions);
+            const positions = data.categories.flatMap(category =>
+                category.roles.map(role => ({ id: role.id, name: role.name }))
+            );
+
+            const uniquePositions = positions.filter(
+                (value, index, self) => index === self.findIndex(t => t.id === value.id)
+            );
+            res.status(200).json(uniquePositions);
         } catch (e) {
             console.warn(e, '\n\n-----------------------------------------------------');
             if (e instanceof Error) {
