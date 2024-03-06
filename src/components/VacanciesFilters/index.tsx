@@ -1,17 +1,16 @@
-import { Button, Layout } from '@greensight/gds';
+import { Button, scale } from '@greensight/gds';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+import { Select } from '@controls/Select';
+
+import ClearAllButton from '@components/VacanciesFilters/ClearAllButton';
 import { VacanciesFiltersProps } from '@components/VacanciesFilters/types';
-import { Select, SelectItem } from '@controls/Select';
-
-
 
 export default function VacanciesFilters({ schedules, positions }: VacanciesFiltersProps) {
-    const [employmentValue, setEmploymentValue] = useState('');
-    const [positionValue, setPositionValue] = useState('');
-
     const { push, query, pathname } = useRouter();
+    const [employmentValue, setEmploymentValue] = useState(query?.employment ?? '');
+    const [positionValue, setPositionValue] = useState(query?.position ?? '');
 
     const updateQuery = () => {
         push(
@@ -21,26 +20,45 @@ export default function VacanciesFilters({ schedules, positions }: VacanciesFilt
             },
             undefined,
             { shallow: true }
-        )
-    }
-    return (
-        <div>
-            <Layout type="flex" align="end">
-                <Select placeholder='placeholder' >
-                    <SelectItem value={'1'}>aSd</SelectItem>
-                    <SelectItem value={'2'}>aSd</SelectItem>
-                    <SelectItem value={'3'}>aSd</SelectItem>
-                    <SelectItem value={'4'}>aSd</SelectItem>
-                </Select>
-                <Select placeholder='placeholder' >
-                    <SelectItem value={'5'}>qwe</SelectItem>
-                    <SelectItem value={'6'}>qwe</SelectItem>
-                    <SelectItem value={'7'}>qwe</SelectItem>
-                    <SelectItem value={'8'}>qwe</SelectItem>
-                </Select>
-                <Button onClick={updateQuery}>Apply filters</Button>
-            </Layout>
+        );
+    };
 
-        </div>
+    const handleClear = () => {
+        setPositionValue('');
+        setEmploymentValue('');
+        updateQuery();
+        console.log(query);
+    };
+
+    return (
+        <>
+            <div css={{ display: 'flex', gap: scale(4), alignItems: 'end' }}>
+                <div css={{ display: 'flex', gap: scale(2), '& > *': { minWidth: '265px' } }}>
+                    <Select
+                        value={employmentValue}
+                        onValueChange={value => setEmploymentValue(value)}
+                        placeholder="Not selected"
+                        label="Form"
+                        options={schedules.map(schedule => {
+                            return { value: schedule.id, name: schedule.name };
+                        })}
+                    />
+                    <Select
+                        value={positionValue}
+                        onValueChange={value => setPositionValue(value)}
+                        placeholder="Not selected"
+                        label="Position"
+                        options={positions.map(position => {
+                            return { value: position.id, name: position.name };
+                        })}
+                    />
+                </div>
+
+                <Button onClick={updateQuery}>Search</Button>
+            </div>
+            {(employmentValue || positionValue) && (
+                <ClearAllButton css={{ marginTop: scale(2) }} onClick={handleClear} />
+            )}
+        </>
     );
 }

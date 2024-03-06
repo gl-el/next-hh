@@ -25,9 +25,7 @@ export interface SelectTheme {
     optionPadding: string;
     optionHeight: string | number;
     optionHighlightedBg: string;
-    optionHighlightColor: string;
-
-
+    optionHighlightedColor: string;
 }
 
 export const Select: SelectTheme = {
@@ -49,5 +47,5 @@ export const Select: SelectTheme = {
     optionPadding: `${scale(1, true)}px ${scale(3, true)}px`,
     optionHeight: scale(5),
     optionHighlightedBg: colors.blue,
-    optionHighlightColor: colors.white,
+    optionHighlightedColor: colors.white,
 };
