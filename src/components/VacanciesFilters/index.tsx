@@ -65,7 +65,7 @@ export default function VacanciesFilters({ schedules, positions }: VacanciesFilt
                     Search
                 </Button>
             </div>
-            {(employmentValue || positionValue) && (
+            {(query?.employment || query?.position) && (
                 <ClearAllButton css={{ marginTop: scale(2) }} onClick={handleClear} />
             )}
         </>
