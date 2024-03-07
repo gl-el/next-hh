@@ -19,7 +19,7 @@ export interface DictionariesApiProps extends Record<string, { id: string; name:
 }
 
 export interface EmploymentsApiProps {
-    id: string,
+    id: string;
     name: string;
 }
 

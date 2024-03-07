@@ -5,8 +5,6 @@ import { PaginationProps } from '@controls/Pagination/types';
 
 import IconLeft from '@icons/chevronLeft.svg';
 import IconRight from '@icons/chevronRight.svg';
-import { query } from 'express';
-import { LOCAL_API_BASE } from '@scripts/consts';
 
 export default function Pagination({ totalPages }: PaginationProps) {
     const { push, query, pathname } = useRouter();
@@ -20,8 +18,8 @@ export default function Pagination({ totalPages }: PaginationProps) {
             },
             undefined,
             { shallow: true }
-        )
-    }
+        );
+    };
 
     return (
         <div css={{ display: 'flex', gap: '8px', alignItems: 'center', justifyContent: 'center' }}>

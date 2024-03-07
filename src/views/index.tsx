@@ -15,7 +15,11 @@ import { typography } from '@scripts/gds';
 export default function IndexPage({ employments, positions }: IndexPageProps) {
     const router = useRouter();
     const { page, employment, position } = router.query;
-    const { data, isLoading } = useVacancies({ page: page ?? 1, employmentID: employment ?? '', positionID: position ?? '' });
+    const { data, isLoading } = useVacancies({
+        page: page ?? 1,
+        employmentID: employment ?? '',
+        positionID: position ?? '',
+    });
 
     return (
         <main css={{ maxWidth: '1200px', margin: '0 auto', padding: `${scale(8)}px 0px` }}>

@@ -1,14 +1,9 @@
-import {
-    EmploymentsApiProps,
-    ErrorsApiProps,
-    ProfessionsApiProps,
-    VacanciesRequestProps,
-} from '@api/common/types';
+import { EmploymentsApiProps, ErrorsApiProps, ProfessionsApiProps, VacanciesRequestProps } from '@api/common/types';
+import { VacanciesQueryResponse } from '@api/vacancies/types';
 
 import { VacancyProps } from '@customTypes/index';
 
-import { LOCAL_API_BASE, PAGE_SIZE } from '@scripts/consts';
-import { VacanciesQueryResponse } from '@api/vacancies/types';
+import { LOCAL_API_BASE } from '@scripts/consts';
 
 async function returnJSON<T extends object>(response: Response) {
     if (!response.ok) {
@@ -34,7 +29,7 @@ export async function getVacancy(vacancyId: string) {
     return returnJSON<VacancyProps>(response);
 }
 
-export async function getVacancies({page = 1, employmentID, positionID}: VacanciesRequestProps) {
+export async function getVacancies({ page = 1, employmentID, positionID }: VacanciesRequestProps) {
     const response = await fetch(
         `${LOCAL_API_BASE}/vacancies?page=${page}${employmentID ? `&employment=${employmentID}` : ''}${positionID ? `&position=${positionID}` : ''}`
     );

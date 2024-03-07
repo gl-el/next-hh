@@ -9,14 +9,14 @@ import { VacanciesFiltersProps } from '@components/VacanciesFilters/types';
 
 export default function VacanciesFilters({ schedules, positions }: VacanciesFiltersProps) {
     const { push, query, pathname } = useRouter();
-    const [employmentValue, setEmploymentValue] = useState(query?.employment ?? '');
-    const [positionValue, setPositionValue] = useState(query?.position ?? '');
+    const [employmentValue, setEmploymentValue] = useState((query?.employment as string) ?? '');
+    const [positionValue, setPositionValue] = useState((query?.position as string) ?? '');
 
-    const updateQuery = () => {
+    const updateQuery = (newData: Record<string, string>) => {
         push(
             {
                 pathname,
-                query: { page: 1, employment: employmentValue, position: positionValue },
+                query: { ...newData },
             },
             undefined,
             { shallow: true }
@@ -26,8 +26,7 @@ export default function VacanciesFilters({ schedules, positions }: VacanciesFilt
     const handleClear = () => {
         setPositionValue('');
         setEmploymentValue('');
-        updateQuery();
-        console.log(query);
+        updateQuery({ page: '1' });
     };
 
     return (
@@ -54,7 +53,17 @@ export default function VacanciesFilters({ schedules, positions }: VacanciesFilt
                     />
                 </div>
 
-                <Button onClick={updateQuery}>Search</Button>
+                <Button
+                    onClick={() =>
+                        updateQuery({
+                            page: '1',
+                            employment: employmentValue,
+                            position: positionValue,
+                        })
+                    }
+                >
+                    Search
+                </Button>
             </div>
             {(employmentValue || positionValue) && (
                 <ClearAllButton css={{ marginTop: scale(2) }} onClick={handleClear} />

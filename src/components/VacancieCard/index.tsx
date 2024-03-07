@@ -1,8 +1,9 @@
 import { Layout, scale } from '@greensight/gds';
 import Image from 'next/image';
 
-import { Button, typography } from '@scripts/gds';
 import { VacancyProps } from '@customTypes/index';
+
+import { Button, typography } from '@scripts/gds';
 
 export default function VacancieCard(vacancyProps: VacancyProps) {
     const logo = vacancyProps?.employer?.logo_urls?.original;
@@ -25,7 +26,13 @@ export default function VacancieCard(vacancyProps: VacancyProps) {
                     )}
                 </Layout>
 
-                <Button as="a" theme="secondary" target="_blank" href={vacancyProps.alternate_url} rel="noopener noreferrer">
+                <Button
+                    as="a"
+                    theme="secondary"
+                    target="_blank"
+                    href={vacancyProps.alternate_url}
+                    rel="noopener noreferrer"
+                >
                     Respond
                 </Button>
             </Layout>
