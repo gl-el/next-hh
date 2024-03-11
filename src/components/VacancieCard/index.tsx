@@ -1,43 +1,76 @@
-import { Layout, scale } from '@greensight/gds';
-import Image from 'next/image';
+import { scale } from '@greensight/gds';
+import { useState } from 'react';
 
 import { VacancyProps } from '@customTypes/index';
 
-import { Button, typography } from '@scripts/gds';
+import VacancyEmployerDetails from '@components/VacancieCard/VacancyEmployerDetails';
+import VacancyHeader from '@components/VacancieCard/VacancyHeader';
+
+import { Button, shadows, typography } from '@scripts/gds';
+
+import ChevronUp from '@icons/chevronUp.svg';
 
 export default function VacancieCard(vacancyProps: VacancyProps) {
+    const [isOpen, setIsOpen] = useState(false);
     const logo = vacancyProps?.employer?.logo_urls?.original;
-    const employerName = vacancyProps?.employer?.name;
+    const vacancyDetails = [
+        { label: 'Form', value: vacancyProps?.employment?.name },
+        {
+            label: 'Company',
+            value: vacancyProps?.employer?.name,
+        },
+        { label: 'Web', value: vacancyProps?.employer?.alternate_url },
+        { label: 'Address', value: vacancyProps?.area.name },
+    ];
 
     return (
-        <div css={{ padding: `${scale(5)}px ${scale(5)}px ${scale(6)}px` }}>
-            <Layout type="flex" justify="space-between" align="center" direction="row" wrap={false} marginWidth={0}>
-                <Layout type="flex" align="center">
-                    <h4 css={typography('h4')}>{vacancyProps.name}</h4>
-
-                    {logo && (
-                        <Image
-                            src={logo}
-                            alt={employerName ?? ''}
-                            width={150}
-                            height={40}
-                            style={{ objectFit: 'contain' }}
-                        />
-                    )}
-                </Layout>
-
+        <div
+            css={{
+                padding: `${scale(5)}px ${scale(5)}px ${scale(6)}px`,
+                maxHeight: `${isOpen ? 'auto' : '348px'}`,
+                position: 'relative',
+                borderRadius: scale(2),
+                boxShadow: shadows.boxLight,
+                overflow: 'hidden',
+                transition: 'all 0.5s',
+            }}
+        >
+            <VacancyHeader name={vacancyProps.name} responseUrl={vacancyProps.alternate_url} logo={logo} />
+            <VacancyEmployerDetails details={vacancyDetails} />
+            <div
+                css={{ ...typography('m'), display: 'flex', flexDirection: 'column', gap: scale(2) }}
+                dangerouslySetInnerHTML={{ __html: vacancyProps.description }}
+            />
+            <div
+                css={{
+                    position: `${isOpen ? 'static' : 'absolute'}`,
+                    bottom: 0,
+                    left: 0,
+                    padding: `${isOpen ? 0 : scale(5)}px`,
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                    justifyContent: 'center',
+                    width: '100%',
+                    height: `${isOpen ? 'auto' : '160px'}`,
+                    background: `${isOpen ? 'transparent' : 'linear-gradient(180deg, rgba(255, 255, 255, 0.05) 12.82%, rgba(255, 255, 255, 0.98) 50.51%, rgba(255, 255, 255, 0.98) 56.86%, #FFF 88.19%)'}`,
+                }}
+            >
                 <Button
-                    as="a"
-                    theme="secondary"
-                    target="_blank"
-                    href={vacancyProps.alternate_url}
-                    rel="noopener noreferrer"
+                    theme="link"
+                    size="link"
+                    Icon={ChevronUp}
+                    iconAfter
+                    onClick={() => setIsOpen(state => !state)}
+                    css={{
+                        '& > svg': {
+                            transition: 'transform 0.2s',
+                            transform: `rotate(${isOpen ? 0 : '180deg'})`,
+                        },
+                    }}
                 >
-                    Respond
+                    {isOpen ? 'Less details' : 'More details'}
                 </Button>
-            </Layout>
-            <div css={typography('m')} dangerouslySetInnerHTML={{ __html: vacancyProps.description }} />
-            <br />
+            </div>
         </div>
     );
 }
