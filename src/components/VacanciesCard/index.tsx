@@ -3,14 +3,14 @@ import { useState } from 'react';
 
 import { VacancyProps } from '@customTypes/index';
 
-import VacancyEmployerDetails from '@components/VacancieCard/VacancyEmployerDetails';
-import VacancyHeader from '@components/VacancieCard/VacancyHeader';
+import VacancyEmployerDetails from '@components/VacanciesCard/VacancyEmployerDetails';
+import VacancyHeader from '@components/VacanciesCard/VacancyHeader';
 
 import { Button, shadows, typography } from '@scripts/gds';
 
 import ChevronUp from '@icons/chevronUp.svg';
 
-export default function VacancieCard(vacancyProps: VacancyProps) {
+export default function VacanciesCard(vacancyProps: VacancyProps) {
     const [isOpen, setIsOpen] = useState(false);
     const logo = vacancyProps?.employer?.logo_urls?.original;
     const vacancyDetails = [
