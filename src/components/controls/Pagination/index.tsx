@@ -1,4 +1,4 @@
-import { Button } from '@greensight/gds';
+import { Button, scale } from '@greensight/gds';
 import { useRouter } from 'next/router';
 
 import { PaginationProps } from '@controls/Pagination/types';
@@ -22,7 +22,7 @@ export default function Pagination({ totalPages }: PaginationProps) {
     };
 
     return (
-        <div css={{ display: 'flex', gap: '8px', alignItems: 'center', justifyContent: 'center' }}>
+        <div css={{ margin: scale(2), display: 'flex', gap: '8px', alignItems: 'center', justifyContent: 'center' }}>
             <Button
                 theme="link"
                 size="link"
