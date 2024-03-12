@@ -65,58 +65,59 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                             />
                         </SelectPrimitive.Icon>
                     </SelectPrimitive.Trigger>
-
-                    <SelectPrimitive.Content
-                        position="popper"
-                        avoidCollisions={true}
-                        sideOffset={4}
-                        css={{
-                            width: 'var(--radix-select-trigger-width)',
-                            maxHeight: '50vh',
-                            overflowY: 'auto',
-                            boxShadow: selectTheme?.menuShadow,
-                            backgroundColor: selectTheme?.menuColor,
-                            borderRadius: selectTheme?.menuBorderRadius,
-                        }}
-                    >
-                        <SelectPrimitive.ScrollUpButton
+                    <SelectPrimitive.Portal>
+                        <SelectPrimitive.Content
+                            position="popper"
+                            avoidCollisions={true}
+                            sideOffset={4}
                             css={{
-                                textAlign: 'center',
-                                padding: scale(1),
+                                width: 'var(--radix-select-trigger-width)',
+                                maxHeight: '50vh',
+                                overflowY: 'auto',
+                                boxShadow: selectTheme?.menuShadow,
+                                backgroundColor: selectTheme?.menuColor,
+                                borderRadius: selectTheme?.menuBorderRadius,
                             }}
                         >
-                            <ChevronUpIcon />
-                        </SelectPrimitive.ScrollUpButton>
-                        <SelectPrimitive.Viewport>
-                            {options.map(item => (
-                                <SelectPrimitive.Item
-                                    key={item.value}
-                                    css={{
-                                        ...typography(selectTheme?.typography),
-                                        padding: selectTheme?.optionPadding,
-                                        minHeight: selectTheme?.optionHeight,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        '&[data-highlighted]': {
-                                            backgroundColor: selectTheme?.optionHighlightedBg,
-                                            color: selectTheme?.optionHighlightedColor,
-                                        },
-                                    }}
-                                    value={item.value}
-                                >
-                                    <SelectPrimitive.ItemText>{item.name}</SelectPrimitive.ItemText>
-                                </SelectPrimitive.Item>
-                            ))}
-                        </SelectPrimitive.Viewport>
-                        <SelectPrimitive.ScrollDownButton
-                            css={{
-                                textAlign: 'center',
-                                padding: scale(1),
-                            }}
-                        >
-                            <ChevronDownIcon />
-                        </SelectPrimitive.ScrollDownButton>
-                    </SelectPrimitive.Content>
+                            <SelectPrimitive.ScrollUpButton
+                                css={{
+                                    textAlign: 'center',
+                                    padding: scale(1),
+                                }}
+                            >
+                                <ChevronUpIcon />
+                            </SelectPrimitive.ScrollUpButton>
+                            <SelectPrimitive.Viewport>
+                                {options.map(item => (
+                                    <SelectPrimitive.Item
+                                        key={item.value}
+                                        css={{
+                                            ...typography(selectTheme?.typography),
+                                            padding: selectTheme?.optionPadding,
+                                            minHeight: selectTheme?.optionHeight,
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            '&[data-highlighted]': {
+                                                backgroundColor: selectTheme?.optionHighlightedBg,
+                                                color: selectTheme?.optionHighlightedColor,
+                                            },
+                                        }}
+                                        value={item.value}
+                                    >
+                                        <SelectPrimitive.ItemText>{item.name}</SelectPrimitive.ItemText>
+                                    </SelectPrimitive.Item>
+                                ))}
+                            </SelectPrimitive.Viewport>
+                            <SelectPrimitive.ScrollDownButton
+                                css={{
+                                    textAlign: 'center',
+                                    padding: scale(1),
+                                }}
+                            >
+                                <ChevronDownIcon />
+                            </SelectPrimitive.ScrollDownButton>
+                        </SelectPrimitive.Content>
+                    </SelectPrimitive.Portal>
                 </SelectPrimitive.Root>
             </label>
         );
