@@ -7,26 +7,29 @@ import { Select } from '@controls/Select';
 import ClearAllButton from '@components/VacanciesFilters/ClearAllButton';
 import { VacanciesFiltersProps } from '@components/VacanciesFilters/types';
 
+import { useUpdateQuery } from '@hooks/useUpdateQuery';
+
 export default function VacanciesFilters({ schedules, positions }: VacanciesFiltersProps) {
-    const { push, query, pathname } = useRouter();
+    const { query } = useRouter();
+    const updateQuery = useUpdateQuery();
     const [employmentValue, setEmploymentValue] = useState((query?.employment as string) ?? '');
     const [positionValue, setPositionValue] = useState((query?.position as string) ?? '');
 
-    const updateQuery = (newData: Record<string, string>) => {
-        push(
-            {
-                pathname,
-                query: { ...newData },
-            },
-            undefined,
-            { shallow: true }
-        );
+    const handleSearch = () => {
+        updateQuery({
+            page: '1',
+            employment: employmentValue,
+            position: positionValue,
+        });
     };
-
     const handleClear = () => {
         setPositionValue('');
         setEmploymentValue('');
-        updateQuery({ page: '1' });
+        updateQuery({
+            page: '1',
+            employment: '',
+            position: '',
+        });
     };
 
     return (
@@ -53,17 +56,7 @@ export default function VacanciesFilters({ schedules, positions }: VacanciesFilt
                     />
                 </div>
 
-                <Button
-                    onClick={() =>
-                        updateQuery({
-                            page: '1',
-                            employment: employmentValue,
-                            position: positionValue,
-                        })
-                    }
-                >
-                    Search
-                </Button>
+                <Button onClick={handleSearch}>Search</Button>
             </div>
             {(query?.employment || query?.position) && (
                 <ClearAllButton css={{ marginTop: scale(2) }} onClick={handleClear} />

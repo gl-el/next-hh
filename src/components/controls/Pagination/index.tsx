@@ -3,23 +3,16 @@ import { useRouter } from 'next/router';
 
 import { PaginationProps } from '@controls/Pagination/types';
 
+import { useUpdateQuery } from '@hooks/useUpdateQuery';
+
 import IconLeft from '@icons/chevronLeft.svg';
 import IconRight from '@icons/chevronRight.svg';
 
 export default function Pagination({ totalPages }: PaginationProps) {
-    const { push, query, pathname } = useRouter();
+    const { query } = useRouter();
+    const updateQuery = useUpdateQuery();
 
     let page = Number(query?.page) || 1;
-    const updateQuery = (page: number) => {
-        push(
-            {
-                pathname,
-                query: { ...query, page },
-            },
-            undefined,
-            { shallow: true }
-        );
-    };
 
     return (
         <div css={{ margin: scale(2), display: 'flex', gap: '8px', alignItems: 'center', justifyContent: 'center' }}>
@@ -27,7 +20,7 @@ export default function Pagination({ totalPages }: PaginationProps) {
                 theme="link"
                 size="link"
                 Icon={IconLeft}
-                onClick={() => updateQuery(page - 1)}
+                onClick={() => updateQuery({ page: `${page - 1}` })}
                 disabled={page - 1 <= 0}
             >
                 Prev
@@ -38,7 +31,7 @@ export default function Pagination({ totalPages }: PaginationProps) {
                 size="link"
                 Icon={IconRight}
                 iconAfter
-                onClick={() => updateQuery(page + 1)}
+                onClick={() => updateQuery({ page: `${page + 1}` })}
                 disabled={page + 1 >= totalPages}
             >
                 Next
