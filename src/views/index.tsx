@@ -1,4 +1,5 @@
 import { scale } from '@greensight/gds';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import VacanciesCard from 'src/components/VacanciesCard';
 
@@ -25,16 +26,21 @@ export default function IndexPage({ employments, positions }: IndexPageProps) {
     });
 
     return (
-        <main css={{ maxWidth: '1200px', margin: '0 auto', padding: `${scale(8)}px 0px` }}>
-            <h1 css={{ ...typography('h1'), margin: `0 0 ${scale(5)}px` }}>List of vacancies</h1>
-            <VacanciesFilters schedules={employments} positions={positions} />
-            {!isLoading && (
-                <VacanciesList<VacancyProps>
-                    items={data?.vacancies}
-                    render={vacancy => <VacanciesCard key={vacancy.id} {...vacancy} />}
-                />
-            )}
-            <Pagination totalPages={data?.pagesTotal ?? 0} />
-        </main>
+        <>
+            <Head>
+                <title>List of vacancies</title>
+            </Head>
+            <main css={{ maxWidth: '1200px', margin: '0 auto', padding: `${scale(8)}px 0px` }}>
+                <h1 css={{ ...typography('h1'), margin: `0 0 ${scale(5)}px` }}>List of vacancies</h1>
+                <VacanciesFilters schedules={employments} positions={positions} />
+                {!isLoading && (
+                    <VacanciesList<VacancyProps>
+                        items={data?.vacancies}
+                        render={vacancy => <VacanciesCard key={vacancy.id} {...vacancy} />}
+                    />
+                )}
+                <Pagination totalPages={data?.pagesTotal ?? 0} />
+            </main>
+        </>
     );
 }
