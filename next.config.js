@@ -13,7 +13,7 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'hhcdn.ru',
+                hostname: 'img.hhcdn.ru',
                 port: '',
                 pathname: '/employer-logo-original/**',
             },
