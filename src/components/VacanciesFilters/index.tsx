@@ -1,4 +1,4 @@
-import { Button, scale } from '@greensight/gds';
+import { Button, Layout, scale } from '@greensight/gds';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -34,30 +34,33 @@ export default function VacanciesFilters({ schedules, positions }: VacanciesFilt
 
     return (
         <>
-            <div css={{ display: 'flex', gap: scale(4), alignItems: 'end' }}>
-                <div css={{ display: 'flex', gap: scale(2), '& > *': { minWidth: '265px' } }}>
-                    <Select
-                        value={employmentValue}
-                        onValueChange={value => setEmploymentValue(value)}
-                        placeholder="Not selected"
-                        label="Form"
-                        options={schedules.map(schedule => {
-                            return { value: schedule.id, name: schedule.name };
-                        })}
-                    />
-                    <Select
-                        value={positionValue}
-                        onValueChange={value => setPositionValue(value)}
-                        placeholder="Not selected"
-                        label="Position"
-                        options={positions.map(position => {
-                            return { value: position.id, name: position.name };
-                        })}
-                    />
-                </div>
-
-                <Button onClick={handleSearch}>Search</Button>
-            </div>
+            <Layout type="flex" gap={scale(4)} align="end" >
+                <Layout.Item col={{xxxl: 546, sm: "100%"}}>
+                    <Layout type="flex" gap={scale(2)} >
+                        <Layout.Item col={{ xxxl: "50%", sm: "100%"}}>
+                            <Select
+                                value={employmentValue}
+                                onValueChange={value => setEmploymentValue(value)}
+                                placeholder="Not selected"
+                                label="Form"
+                                options={schedules.map(schedule => ({ value: schedule.id, name: schedule.name }))}
+                            />
+                        </Layout.Item>
+                        <Layout.Item col={{ xxxl: "50%", sm: "100%"}}>
+                            <Select
+                                value={positionValue}
+                                onValueChange={value => setPositionValue(value)}
+                                placeholder="Not selected"
+                                label="Position"
+                                options={positions.map(position => ({ value: position.id, name: position.name }))}
+                            />
+                        </Layout.Item>
+                    </Layout>
+                </Layout.Item>
+                <Layout.Item>
+                    <Button onClick={handleSearch}>Search</Button>
+                </Layout.Item>
+            </Layout>
             {(query?.employment || query?.position) && (
                 <ClearAllButton css={{ marginTop: scale(2) }} onClick={handleClear} />
             )}

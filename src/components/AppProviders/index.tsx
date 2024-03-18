@@ -1,4 +1,4 @@
-import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Hydrate, QueryClient, QueryClientProvider, type DehydratedState } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ReactNode, useState } from 'react';
 
@@ -6,7 +6,7 @@ import { ThemeProvider, theme } from '@scripts/gds';
 
 interface AppProvidersProps {
     children: ReactNode;
-    dehydratedState: any;
+    dehydratedState: DehydratedState;
 }
 
 function AppProviders({ children, dehydratedState }: AppProvidersProps) {

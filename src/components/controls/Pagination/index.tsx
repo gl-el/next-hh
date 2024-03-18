@@ -12,7 +12,7 @@ export default function Pagination({ totalPages }: PaginationProps) {
     const { query } = useRouter();
     const updateQuery = useUpdateQuery();
 
-    let page = Number(query?.page) || 1;
+    const page = Number(query?.page) || 1;
 
     return (
         <div css={{ margin: scale(2), display: 'flex', gap: '8px', alignItems: 'center', justifyContent: 'center' }}>

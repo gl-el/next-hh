@@ -64,5 +64,6 @@ module.exports = {
         'jsx-a11y/click-events-have-key-events': 0,
         'import/no-named-as-default': 0,
         'import/prefer-default-export': 0,
+        '@typescript-eslint/no-explicit-any': 1,
     },
 };

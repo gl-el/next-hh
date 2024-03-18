@@ -68,7 +68,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                     <SelectPrimitive.Portal>
                         <SelectPrimitive.Content
                             position="popper"
-                            avoidCollisions={true}
+                            avoidCollisions
                             sideOffset={4}
                             css={{
                                 width: 'var(--radix-select-trigger-width)',

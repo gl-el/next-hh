@@ -26,7 +26,7 @@ export default function VacancyHeader({ name, logo, responseUrl }: VacancyHeader
                 {logo && (
                     <Image
                         src={logo}
-                        alt={'Company logo'}
+                        alt='Company logo'
                         width={0}
                         height={0}
                         sizes="100vw"

@@ -12,6 +12,7 @@ import ChevronUp from '@icons/chevronUp.svg';
 
 export default function VacanciesCard(vacancyProps: VacancyProps) {
     const [isOpen, setIsOpen] = useState(false);
+    const { name, alternate_url, description } =  vacancyProps;
     const logo = vacancyProps?.employer?.logo_urls?.original;
     const vacancyDetails = [
         { label: 'Form', value: vacancyProps?.employment?.name },
@@ -35,11 +36,11 @@ export default function VacanciesCard(vacancyProps: VacancyProps) {
                 transition: 'all 0.5s',
             }}
         >
-            <VacancyHeader name={vacancyProps.name} responseUrl={vacancyProps.alternate_url} logo={logo} />
+            <VacancyHeader name={name} responseUrl={alternate_url} logo={logo} />
             <VacancyEmployerDetails details={vacancyDetails} />
             <div
                 css={{ ...typography('m'), display: 'flex', flexDirection: 'column', gap: scale(2) }}
-                dangerouslySetInnerHTML={{ __html: vacancyProps.description }}
+                dangerouslySetInnerHTML={{ __html: description }}
             />
             <div
                 css={{
