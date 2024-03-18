@@ -1,6 +1,6 @@
 import { Button, Layout, scale } from '@greensight/gds';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Select } from '@controls/Select';
 
@@ -34,10 +34,10 @@ export default function VacanciesFilters({ schedules, positions }: VacanciesFilt
 
     return (
         <>
-            <Layout type="flex" gap={scale(4)} align="end" >
-                <Layout.Item col={{xxxl: 546, sm: "100%"}}>
-                    <Layout type="flex" gap={scale(2)} >
-                        <Layout.Item col={{ xxxl: "50%", sm: "100%"}}>
+            <Layout type="flex" gap={scale(4)} align="end">
+                <Layout.Item col={{ xxxl: 546, sm: '100%' }}>
+                    <Layout type="flex" gap={scale(2)}>
+                        <Layout.Item col={{ xxxl: '50%', sm: '100%' }}>
                             <Select
                                 value={employmentValue}
                                 onValueChange={value => setEmploymentValue(value)}
@@ -46,7 +46,7 @@ export default function VacanciesFilters({ schedules, positions }: VacanciesFilt
                                 options={schedules.map(schedule => ({ value: schedule.id, name: schedule.name }))}
                             />
                         </Layout.Item>
-                        <Layout.Item col={{ xxxl: "50%", sm: "100%"}}>
+                        <Layout.Item col={{ xxxl: '50%', sm: '100%' }}>
                             <Select
                                 value={positionValue}
                                 onValueChange={value => setPositionValue(value)}
@@ -57,8 +57,10 @@ export default function VacanciesFilters({ schedules, positions }: VacanciesFilt
                         </Layout.Item>
                     </Layout>
                 </Layout.Item>
-                <Layout.Item>
-                    <Button onClick={handleSearch}>Search</Button>
+                <Layout.Item col={{ sm: '100%' }}>
+                    <Button onClick={handleSearch} block>
+                        Search
+                    </Button>
                 </Layout.Item>
             </Layout>
             {(query?.employment || query?.position) && (
