@@ -1,6 +1,7 @@
-import { Container, Section, scale } from '@greensight/gds';
+import { Section, scale } from '@greensight/gds';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useMemo } from 'react';
 import VacanciesCard from 'src/components/VacanciesCard';
 
 import { useVacancies } from '@api/vacancies/useVacancies';
@@ -14,10 +15,14 @@ import Pagination from '@controls/Pagination';
 import VacanciesFilters from '@components/VacanciesFilters';
 import VacanciesList from '@components/VacanciesList';
 
+import { useMedia } from '@hooks/useMedia';
+
 import { typography } from '@scripts/gds';
+import { CSSObject } from '@emotion/core';
 
 export default function IndexPage({ employments, positions }: IndexPageProps) {
     const router = useRouter();
+    const { md } = useMedia();
     const { page, employment, position } = router.query as { page?: string; employment?: string; position?: string };
     const { data, isLoading } = useVacancies({
         page: Number(page) ?? 1,
@@ -25,13 +30,28 @@ export default function IndexPage({ employments, positions }: IndexPageProps) {
         positionID: position ?? '',
     });
 
+    const typographyMd = useMemo(() => {
+        return typography('h1')[md] as CSSObject;
+    }, [md]);
+
     return (
         <>
             <Head>
                 <title>List of vacancies</title>
             </Head>
             <Section pt={{ xxxl: scale(8), md: scale(4) }} pb={{ xxxl: scale(13), md: scale(4) }}>
-                <h1 css={{ ...typography('h1'), margin: `0 0 ${scale(5)}px` }}>List of vacancies</h1>
+                <h1
+                    css={{
+                        ...typography('h1'),
+                        margin: `0 0 ${scale(5)}px`,
+                        [md]: {
+                            margin: `0 0 ${scale(3)}px`,
+                            ...typographyMd,
+                        },
+                    }}
+                >
+                    List of vacancies
+                </h1>
                 <VacanciesFilters schedules={employments} positions={positions} />
                 {!isLoading && (
                     <VacanciesList<VacancyProps>

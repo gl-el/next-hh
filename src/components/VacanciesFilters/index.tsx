@@ -1,6 +1,6 @@
 import { Button, Layout, scale } from '@greensight/gds';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Select } from '@controls/Select';
 
@@ -34,7 +34,7 @@ export default function VacanciesFilters({ schedules, positions }: VacanciesFilt
 
     return (
         <>
-            <Layout type="flex" gap={scale(4)} align="end">
+            <Layout type="flex" gap={{ xxxl: scale(4), sm: scale(3) }} align="end">
                 <Layout.Item col={{ xxxl: 546, sm: '100%' }}>
                     <Layout type="flex" gap={scale(2)}>
                         <Layout.Item col={{ xxxl: '50%', sm: '100%' }}>
