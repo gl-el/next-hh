@@ -1,7 +1,6 @@
 import { Section, scale } from '@greensight/gds';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
 import VacanciesCard from 'src/components/VacanciesCard';
 
 import { useVacancies } from '@api/vacancies/useVacancies';
@@ -12,27 +11,20 @@ import { IndexPageProps } from '@views/types';
 
 import Pagination from '@controls/Pagination';
 
+import Counter from '@components/Counter';
 import VacanciesFilters from '@components/VacanciesFilters';
 import VacanciesList from '@components/VacanciesList';
 
-import { useMedia } from '@hooks/useMedia';
-
-import { typography } from '@scripts/gds';
-import { CSSObject } from '@emotion/core';
+import { MEDIA_QUERIES, typography } from '@scripts/gds';
 
 export default function IndexPage({ employments, positions }: IndexPageProps) {
     const router = useRouter();
-    const { md } = useMedia();
     const { page, employment, position } = router.query as { page?: string; employment?: string; position?: string };
     const { data, isLoading } = useVacancies({
         page: Number(page) ?? 1,
         employmentID: employment ?? '',
         positionID: position ?? '',
     });
-
-    const typographyMd = useMemo(() => {
-        return typography('h1')[md] as CSSObject;
-    }, [md]);
 
     return (
         <>
@@ -44,9 +36,8 @@ export default function IndexPage({ employments, positions }: IndexPageProps) {
                     css={{
                         ...typography('h1'),
                         margin: `0 0 ${scale(5)}px`,
-                        [md]: {
+                        [MEDIA_QUERIES.md]: {
                             margin: `0 0 ${scale(3)}px`,
-                            ...typographyMd,
                         },
                     }}
                 >
@@ -60,6 +51,7 @@ export default function IndexPage({ employments, positions }: IndexPageProps) {
                     />
                 )}
                 <Pagination totalPages={data?.pagesTotal ?? 0} />
+                <Counter />
             </Section>
         </>
     );
