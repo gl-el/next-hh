@@ -1,53 +1,43 @@
-import css from '@emotion/css';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Controller, FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { Controller, FormProvider, SubmitHandler, useForm, useFormContext } from 'react-hook-form';
+import { TextInput } from 'src/components/controls/Form/TextInput';
 
-import { Input } from '@controls/Form/Input';
+import FormField from '@controls/Form/FormField';
 
 import { schema } from '@components/UserForm/schema';
 import { UserFormTypes } from '@components/UserForm/types';
 
 interface ControlInputProps {
     name: string;
+    placeholder: string;
+    type?: 'text' | 'email' | 'password' | 'number';
 }
-
-const ControledInput = ({ name }: ControlInputProps) => {
-    const methods = useFormContext();
-    return (
-        <Controller
-            control={methods.control}
-            name={name}
-            render={({ field: { onChange, onBlur, value, ref }, fieldState: { error } }) => (
-                <Input
-                    wrapperStyles={{ width: '50%' }}
-                    name={name}
-                    placeholder="Enter your name"
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value || ''}
-                    ref={ref}
-                    label={name}
-                    errorMessage={error?.message || ''}
-                />
-            )}
-        />
-    );
-};
 
 export default function UserForm() {
     const methods = useForm<UserFormTypes>({
         resolver: yupResolver(schema),
     });
-    const onSubmit = (data: UserFormTypes) => {
-        console.log(data);
-    };
+    const onSubmit: SubmitHandler<UserFormTypes> = data => console.log(data);
 
-    console.error(methods.formState.errors);
+    console.log(methods.handleSubmit(onSubmit));
 
     return (
         <FormProvider {...methods}>
-            <form css={{ display: 'flex', flexDirection: 'column', gap: 20 }} onSubmit={methods.handleSubmit(onSubmit)}>
-                <ControledInput name="name" />
+            <form
+                css={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 20,
+                    '& label': { width: '80%' },
+                }}
+                onSubmit={methods.handleSubmit(onSubmit)}
+            >
+                <FormField name="name" placeholder="Enter your name" />
+                <FormField name="email" type="email">
+                    <TextInput label="asdasd" placeholder="asdasd" />
+                </FormField>
+                <FormField name="comment" type="password" placeholder="Enter your password" />
                 <button>Submit</button>
             </form>
         </FormProvider>

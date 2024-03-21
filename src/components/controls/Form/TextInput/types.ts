@@ -1,8 +1,9 @@
 import { CSSObject } from '@emotion/core';
 import { BaseThemeState, StyleDefinition, ValueOrFunction } from '@greensight/gds';
-import { ChangeEvent, ComponentPropsWithoutRef, ComponentPropsWithRef, HTMLProps } from 'react';
+import { ChangeEvent, ComponentPropsWithRef, ComponentPropsWithoutRef, HTMLProps } from 'react';
+import { FieldError } from 'react-hook-form';
 
-import { textInputThemes } from '@controls/Form/Input/themes';
+import { textInputThemes } from '@controls/Form/TextInput/themes';
 
 export interface TextInputState {
     disabled?: boolean;
@@ -33,13 +34,13 @@ export type TextInputTheme = ValueOrFunction<
 export interface InputProps
     extends Omit<BaseThemeState<typeof InputVariants, typeof InputSizes, TextInputTheme>, 'theme'>,
         Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'size'> {
-    name: string;
+    name?: string;
     label: string;
-    errorMessage: string;
-    placeholder: string;
-    value: string;
-    onChange: (e: ChangeEvent<HTMLInputElement> ) => void;
-    onBlur: () => void;
+    errorMessage?: string;
+    placeholder?: string;
+    value?: string;
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: () => void;
 
     disabled?: boolean;
     isError?: boolean;
@@ -47,4 +48,5 @@ export interface InputProps
     theme?: TextInputTheme | keyof typeof textInputThemes;
 
     wrapperStyles?: CSSObject;
+    error?: FieldError;
 }

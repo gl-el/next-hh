@@ -3,13 +3,13 @@ import deepmerge from 'deepmerge';
 import { forwardRef, useMemo } from 'react';
 import { upperFirst } from 'tiny-case';
 
-import { textInputThemes } from '@controls/Form/Input/themes';
+import { textInputThemes } from '@controls/Form/TextInput/themes';
 
 import { useThemeCSSPart } from '@scripts/gds';
 
 import { InputProps, InputStateFull } from './types';
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
+export const TextInput = forwardRef<HTMLInputElement, InputProps>(
     (
         {
             theme: themeName = 'primary',
@@ -17,7 +17,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             variant = 'primary',
             disabled,
             label,
-            errorMessage,
+            error,
             wrapperStyles,
             ...props
         },
@@ -29,12 +29,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             () => ({
                 size,
                 variant,
-                isError: errorMessage.length > 0,
+                isError: error?.message ? error.message?.length > 0 : false,
             }),
-            [size, variant]
+            [size, variant, error]
         );
 
         const getCSS = useThemeCSSPart(theme, state);
+
         const labelCSS = useMemo(() => deepmerge.all<CSSObject>([getCSS('label')]), [getCSS]);
         const inputCSS = useMemo(() => deepmerge.all<CSSObject>([getCSS('input')]), [getCSS]);
         const errorCSS = useMemo(() => deepmerge.all<CSSObject>([getCSS('errorMessage')]), [getCSS]);
@@ -43,7 +44,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             <label css={{ ...labelCSS, ...wrapperStyles }}>
                 {upperFirst(label)}
                 <input ref={ref} {...props} css={{ ...inputCSS }} />
-                <span css={{ ...errorCSS }}>{errorMessage}</span>
+                <span css={{ ...errorCSS }}>{error?.message}</span>
             </label>
         );
     }

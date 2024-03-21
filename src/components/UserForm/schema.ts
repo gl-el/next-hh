@@ -1,5 +1,5 @@
 import isEmail from 'validator/lib/isEmail';
-import * as yup from 'yup';
+import * as yup from 'yup';import { JSXElement } from '@babel/types';
 
 const NAME_REGEX = /^[a-zA-Zа-яА-Я]+$/;
 export const schema = yup.object().shape({
@@ -9,7 +9,7 @@ export const schema = yup.object().shape({
         .required('Enter your name')
         .max(50, '50 characters maximum')
         .matches(NAME_REGEX, 'Only letters'),
-    phone: yup.string().default('').min(18, 'Enter phone number').required('Enter phone number'),
+    phone: yup.string().default('').min(1, 'Enter phone number').required('Enter phone number'),
     email: yup
         .string()
         .default('')
