@@ -1,23 +1,11 @@
+import css from '@emotion/css';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ComponentPropsWithoutRef, forwardRef } from 'react';
 import { Controller, FormProvider, useForm, useFormContext } from 'react-hook-form';
-import { upperFirst } from 'tiny-case';
+
+import { Input } from '@controls/Form/Input';
 
 import { schema } from '@components/UserForm/schema';
 import { UserFormTypes } from '@components/UserForm/types';
-
-interface InputProps extends ComponentPropsWithoutRef<'input'> {
-    label: string;
-    errorMessage: string;
-}
-
-const Input = forwardRef<HTMLInputElement, InputProps>(({ label, errorMessage, ...props }, ref) => (
-    <label css={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-        {upperFirst(label)}
-        <input ref={ref} {...props} />
-        <span>{errorMessage}</span>
-    </label>
-));
 
 interface ControlInputProps {
     name: string;
@@ -31,6 +19,9 @@ const ControledInput = ({ name }: ControlInputProps) => {
             name={name}
             render={({ field: { onChange, onBlur, value, ref }, fieldState: { error } }) => (
                 <Input
+                    wrapperStyles={{ width: '50%' }}
+                    name={name}
+                    placeholder="Enter your name"
                     onChange={onChange}
                     onBlur={onBlur}
                     value={value || ''}
